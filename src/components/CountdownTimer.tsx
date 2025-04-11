@@ -6,29 +6,44 @@ interface CountdownTimerProps {
   timeRemaining: string;
   isPaused: boolean;
   isWarning: boolean;
+  isFullscreen?: boolean;
 }
 
 const CountdownTimer: React.FC<CountdownTimerProps> = ({ 
   timeRemaining, 
   isPaused, 
-  isWarning 
+  isWarning,
+  isFullscreen = false
 }) => {
   // Determine text color based on warning state
-  const textColorClass = isWarning ? "text-amber-500" : "text-timer-text-primary";
+  const textColorClass = isWarning ? "text-amber-500" : "text-notion-text";
+  
+  if (isFullscreen) {
+    return (
+      <div className="flex flex-col items-center justify-center py-8">
+        <div className={`text-8xl font-serif tracking-tighter ${textColorClass} transition-colors duration-300`}>
+          {timeRemaining}
+        </div>
+        <div className="mt-4 text-notion-subtle text-lg">
+          {isPaused ? "Timer Paused" : isWarning ? "Almost Time!" : "Time Remaining"}
+        </div>
+      </div>
+    );
+  }
   
   return (
-    <div className="flex flex-col items-center justify-center py-6 animate-fade-in">
+    <div className="flex flex-col items-center justify-center py-6 transition-opacity duration-300 ease-in-out">
       <div className="flex items-center mb-2">
         {isWarning ? (
-          <AlertCircle className="w-6 h-6 mr-2 text-amber-500 animate-pulse-soft" />
+          <AlertCircle className="w-5 h-5 mr-2 text-amber-500" />
         ) : (
-          <Clock className="w-6 h-6 mr-2 text-timer-highlight" />
+          <Clock className="w-5 h-5 mr-2 text-notion-subtle" />
         )}
-        <span className="text-sm font-medium text-timer-text-secondary">
+        <span className="text-sm font-normal text-notion-subtle">
           {isPaused ? "Timer Paused" : isWarning ? "Almost Time!" : "Time Remaining"}
         </span>
       </div>
-      <div className={`text-5xl font-bold tracking-tighter ${textColorClass}`}>
+      <div className={`text-5xl font-serif tracking-tighter ${textColorClass} transition-colors duration-300`}>
         {timeRemaining}
       </div>
     </div>

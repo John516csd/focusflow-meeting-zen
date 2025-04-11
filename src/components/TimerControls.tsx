@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Play, Pause, SkipForward, Clock } from "lucide-react";
+import { PlayCircle, PauseCircle, SkipForward, Clock, Maximize } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface TimerControlsProps {
@@ -9,6 +9,7 @@ interface TimerControlsProps {
   onPause: () => void;
   onSkip: () => void;
   onAddTime: (minutes: number) => void;
+  onToggleFullscreen: () => void;
 }
 
 const TimerControls: React.FC<TimerControlsProps> = ({
@@ -17,41 +18,47 @@ const TimerControls: React.FC<TimerControlsProps> = ({
   onPause,
   onSkip,
   onAddTime,
+  onToggleFullscreen
 }) => {
   return (
-    <div className="flex items-center justify-center gap-3 mt-4">
+    <div className="flex items-center justify-center gap-2 mt-6">
       {isPaused ? (
         <Button
           onClick={onStart}
-          className="bg-timer-highlight hover:bg-timer-lowlight text-white rounded-full w-12 h-12 flex items-center justify-center"
-          aria-label="Start timer"
+          variant="outline"
+          size="sm"
+          className="bg-white hover:bg-notion-hover text-notion-text border-notion-border rounded-md flex items-center"
         >
-          <Play className="h-5 w-5" />
+          <PlayCircle className="h-4 w-4 mr-1" />
+          Start
         </Button>
       ) : (
         <Button
           onClick={onPause}
-          className="bg-amber-500 hover:bg-amber-600 text-white rounded-full w-12 h-12 flex items-center justify-center"
-          aria-label="Pause timer"
+          variant="outline"
+          size="sm"
+          className="bg-white hover:bg-notion-hover text-notion-text border-notion-border rounded-md flex items-center"
         >
-          <Pause className="h-5 w-5" />
+          <PauseCircle className="h-4 w-4 mr-1" />
+          Pause
         </Button>
       )}
 
       <Button
         onClick={onSkip}
         variant="outline"
-        className="rounded-full w-12 h-12 flex items-center justify-center"
-        aria-label="Skip to next item"
+        size="sm"
+        className="bg-white hover:bg-notion-hover text-notion-text border-notion-border rounded-md flex items-center"
       >
-        <SkipForward className="h-5 w-5" />
+        <SkipForward className="h-4 w-4 mr-1" />
+        Skip
       </Button>
 
       <Button
         onClick={() => onAddTime(1)}
         variant="outline"
-        className="rounded-full flex items-center justify-center text-sm"
-        aria-label="Add one minute"
+        size="sm"
+        className="bg-white hover:bg-notion-hover text-notion-text border-notion-border rounded-md flex items-center"
       >
         <Clock className="h-4 w-4 mr-1" />
         +1m
@@ -60,11 +67,21 @@ const TimerControls: React.FC<TimerControlsProps> = ({
       <Button
         onClick={() => onAddTime(5)}
         variant="outline"
-        className="rounded-full flex items-center justify-center text-sm"
-        aria-label="Add five minutes"
+        size="sm"
+        className="bg-white hover:bg-notion-hover text-notion-text border-notion-border rounded-md flex items-center"
       >
         <Clock className="h-4 w-4 mr-1" />
         +5m
+      </Button>
+
+      <Button
+        onClick={onToggleFullscreen}
+        variant="outline"
+        size="sm"
+        className="bg-white hover:bg-notion-hover text-notion-text border-notion-border rounded-md flex items-center"
+      >
+        <Maximize className="h-4 w-4 mr-1" />
+        Present
       </Button>
     </div>
   );

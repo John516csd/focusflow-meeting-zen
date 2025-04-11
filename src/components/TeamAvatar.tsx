@@ -17,7 +17,7 @@ const TeamAvatar: React.FC<TeamAvatarProps> = ({ initials, backgroundColor, name
 
   return (
     <div
-      className={`${sizeClasses[size]} rounded-full flex items-center justify-center text-white font-medium`}
+      className={`${sizeClasses[size]} rounded-md flex items-center justify-center text-white font-normal transition-all duration-150`}
       style={{ backgroundColor }}
       title={name}
     >

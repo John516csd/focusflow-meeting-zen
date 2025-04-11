@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -64,21 +63,33 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				timer: {
-					highlight: '#9b87f5',
-					lowlight: '#d6bcfa',
-					background: '#f7f8fa',
-					border: '#e5e7eb',
+					highlight: '#37352F',
+					lowlight: '#E9E9E7',
+					background: '#FFFFFF',
+					border: '#EBECED',
 					text: {
-						primary: '#333333',
-						secondary: '#8A898C'
+						primary: '#37352F',
+						secondary: '#787774'
 					}
 				},
+				notion: {
+					background: '#FFFFFF',
+					text: '#37352F',
+					subtle: '#787774',
+					border: '#EBECED',
+					hover: '#F7F6F3',
+					accent: '#2383E2'
+				}
+			},
+			fontFamily: {
+				sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+				serif: ['Georgia', 'ui-serif', 'serif']
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)',
-				'2xl': '1rem'
+				'2xl': '0.75rem'
 			},
 			keyframes: {
 				'accordion-down': {
@@ -108,13 +119,27 @@ export default {
 				'fade-in': {
 					from: { opacity: '0' },
 					to: { opacity: '1' }
+				},
+				'fade-in-slow': {
+					from: { opacity: '0' },
+					to: { opacity: '1' }
+				},
+				'slide-in-bottom': {
+					from: { transform: 'translateY(10px)', opacity: '0' },
+					to: { transform: 'translateY(0)', opacity: '1' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'pulse-soft': 'pulse-soft 2s ease-in-out infinite',
-				'fade-in': 'fade-in 0.3s ease-out'
+				'fade-in': 'fade-in 0.3s ease-out',
+				'fade-in-slow': 'fade-in-slow 0.6s ease-out',
+				'slide-in-bottom': 'slide-in-bottom 0.3s ease-out'
+			},
+			boxShadow: {
+				'notion': '0 1px 3px rgba(0, 0, 0, 0.05)',
+				'notion-hover': '0 1px 5px rgba(0, 0, 0, 0.1)'
 			}
 		}
 	},
