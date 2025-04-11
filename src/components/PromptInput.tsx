@@ -19,7 +19,7 @@ const PromptInput: React.FC = () => {
   return (
     <div className="mb-6">
       <h2 className="text-sm font-medium text-notion-subtle uppercase tracking-wide mb-2">
-        Prompt
+        提示词
       </h2>
       <form 
         onSubmit={handleSubmit}
@@ -28,7 +28,7 @@ const PromptInput: React.FC = () => {
         <Input
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Enter your prompt here..."
+          placeholder="请输入提示词..."
           className="flex-1 border-notion-border bg-white focus-visible:ring-notion-accent"
         />
         <Button 
