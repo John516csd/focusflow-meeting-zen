@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from "react";
 import { useTimer } from "@/hooks/useTimer";
 import { initialAgendaItems, AgendaItem } from "@/data/agendaData";
@@ -15,7 +14,6 @@ const AgendaTimer: React.FC = () => {
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
-  // Handle agenda item completion
   const handleAgendaComplete = useCallback((id: string) => {
     setAgendaItems((prevItems) =>
       prevItems.map((item) =>
@@ -24,24 +22,20 @@ const AgendaTimer: React.FC = () => {
     );
   }, []);
 
-  // Initialize the timer
   const timer = useTimer({
     agendaItems,
     onAgendaComplete: handleAgendaComplete,
     soundEnabled,
   });
 
-  // Get current agenda item
   const currentItem = agendaItems.find(
     (item) => item.id === timer.currentItemId
   );
 
-  // Toggle sound notifications
   const toggleSound = () => {
     setSoundEnabled((prev) => !prev);
   };
 
-  // Toggle fullscreen mode
   const toggleFullscreen = () => {
     setIsFullscreen((prev) => !prev);
   };
@@ -60,9 +54,8 @@ const AgendaTimer: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-notion-background flex flex-col p-4 md:p-8 font-sans">
+    <div className="flex-1 bg-notion-background flex flex-col px-4 md:px-8 font-sans">
       <div className="max-w-4xl w-full mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Meeting title and sound toggle */}
         <div className="lg:col-span-3 flex justify-between items-center mb-4">
           <h1 className="text-xl font-medium text-notion-text">Team Weekly Sync</h1>
           <Button
@@ -80,7 +73,6 @@ const AgendaTimer: React.FC = () => {
           </Button>
         </div>
 
-        {/* Agenda timeline - left column */}
         <div className="lg:col-span-1">
           <h2 className="font-medium text-sm mb-4 text-notion-subtle uppercase tracking-wide px-2">
             Agenda
@@ -97,7 +89,6 @@ const AgendaTimer: React.FC = () => {
           </div>
         </div>
 
-        {/* Timer and controls - right column */}
         <div className="lg:col-span-2">
           <Card className="p-6 rounded-md shadow-notion bg-white border-notion-border">
             {currentItem && (
