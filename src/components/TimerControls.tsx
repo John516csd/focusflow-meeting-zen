@@ -1,7 +1,7 @@
 
 import React from "react";
-import { PlayCircle, PauseCircle, SkipForward, Clock, Maximize } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Play, Pause, SkipForward, Clock, Maximize, PlusCircle } from "lucide-react";
 
 interface TimerControlsProps {
   isPaused: boolean;
@@ -10,6 +10,7 @@ interface TimerControlsProps {
   onSkip: () => void;
   onAddTime: (minutes: number) => void;
   onToggleFullscreen: () => void;
+  disabled?: boolean;
 }
 
 const TimerControls: React.FC<TimerControlsProps> = ({
@@ -18,70 +19,63 @@ const TimerControls: React.FC<TimerControlsProps> = ({
   onPause,
   onSkip,
   onAddTime,
-  onToggleFullscreen
+  onToggleFullscreen,
+  disabled = false
 }) => {
-  return (
-    <div className="flex items-center justify-center gap-2 mt-6">
-      {isPaused ? (
-        <Button
-          onClick={onStart}
-          variant="outline"
-          size="sm"
-          className="bg-white hover:bg-notion-hover text-notion-text border-notion-border rounded-md flex items-center"
-        >
-          <PlayCircle className="h-4 w-4 mr-1" />
-          Start
-        </Button>
-      ) : (
-        <Button
-          onClick={onPause}
-          variant="outline"
-          size="sm"
-          className="bg-white hover:bg-notion-hover text-notion-text border-notion-border rounded-md flex items-center"
-        >
-          <PauseCircle className="h-4 w-4 mr-1" />
-          Pause
-        </Button>
-      )}
+  const playPauseButton = isPaused ? (
+    <Button 
+      onClick={onStart}
+      variant="outline"
+      className="border-notion-border hover:bg-notion-hover"
+      disabled={disabled}
+    >
+      <Play className="h-4 w-4 mr-1" />
+      <span>开始</span>
+    </Button>
+  ) : (
+    <Button 
+      onClick={onPause}
+      variant="outline"
+      className="border-notion-border hover:bg-notion-hover"
+      disabled={disabled}
+    >
+      <Pause className="h-4 w-4 mr-1" />
+      <span>暂停</span>
+    </Button>
+  );
 
-      <Button
-        onClick={onSkip}
+  return (
+    <div className="flex flex-wrap justify-center gap-2 mt-6">
+      {playPauseButton}
+      
+      <Button 
+        onClick={onSkip} 
         variant="outline"
-        size="sm"
-        className="bg-white hover:bg-notion-hover text-notion-text border-notion-border rounded-md flex items-center"
+        className="border-notion-border hover:bg-notion-hover"
+        disabled={disabled}
       >
         <SkipForward className="h-4 w-4 mr-1" />
-        Skip
+        <span>跳过</span>
       </Button>
-
-      <Button
-        onClick={() => onAddTime(1)}
-        variant="outline"
-        size="sm"
-        className="bg-white hover:bg-notion-hover text-notion-text border-notion-border rounded-md flex items-center"
-      >
-        <Clock className="h-4 w-4 mr-1" />
-        +1m
-      </Button>
-
-      <Button
+      
+      <Button 
         onClick={() => onAddTime(5)}
         variant="outline"
-        size="sm"
-        className="bg-white hover:bg-notion-hover text-notion-text border-notion-border rounded-md flex items-center"
+        className="border-notion-border hover:bg-notion-hover"
+        disabled={disabled}
       >
-        <Clock className="h-4 w-4 mr-1" />
-        +5m
+        <PlusCircle className="h-4 w-4 mr-1" />
+        <span>增加 5 分钟</span>
       </Button>
-
-      <Button
+      
+      <Button 
         onClick={onToggleFullscreen}
         variant="outline"
-        size="sm"
-        className="bg-white hover:bg-notion-hover text-notion-text border-notion-border rounded-md flex items-center"
+        className="border-notion-border hover:bg-notion-hover"
+        disabled={disabled}
       >
         <Maximize className="h-4 w-4 mr-1" />
-        Present
+        <span>全屏</span>
       </Button>
     </div>
   );

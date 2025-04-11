@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback } from "react";
 import { useTimer } from "@/hooks/useTimer";
 import { initialAgendaItems, AgendaItem } from "@/data/agendaData";
@@ -9,8 +10,14 @@ import { Card } from "@/components/ui/card";
 import { Bell, BellOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const AgendaTimer: React.FC = () => {
-  const [agendaItems, setAgendaItems] = useState<AgendaItem[]>(initialAgendaItems);
+interface AgendaTimerProps {
+  customAgenda?: AgendaItem[];
+}
+
+const AgendaTimer: React.FC<AgendaTimerProps> = ({ customAgenda }) => {
+  const [agendaItems, setAgendaItems] = useState<AgendaItem[]>(
+    customAgenda || initialAgendaItems
+  );
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
@@ -21,6 +28,13 @@ const AgendaTimer: React.FC = () => {
       )
     );
   }, []);
+
+  // Update agenda when new items are provided
+  React.useEffect(() => {
+    if (customAgenda) {
+      setAgendaItems(customAgenda);
+    }
+  }, [customAgenda]);
 
   const timer = useTimer({
     agendaItems,
@@ -57,7 +71,9 @@ const AgendaTimer: React.FC = () => {
     <div className="flex-1 bg-notion-background flex flex-col px-4 md:px-8 font-sans">
       <div className="max-w-4xl w-full mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-3 flex justify-between items-center mb-4">
-          <h1 className="text-xl font-medium text-notion-text">Team Weekly Sync</h1>
+          <h1 className="text-xl font-medium text-notion-text">
+            {agendaItems.length > 0 ? "会议议程" : "等待生成议程..."}
+          </h1>
           <Button
             variant="ghost"
             size="sm"
@@ -75,7 +91,7 @@ const AgendaTimer: React.FC = () => {
 
         <div className="lg:col-span-1">
           <h2 className="font-medium text-sm mb-4 text-notion-subtle uppercase tracking-wide px-2">
-            Agenda
+            议程
           </h2>
           <div className="relative space-y-0.5">
             {agendaItems.map((item) => (
@@ -91,16 +107,25 @@ const AgendaTimer: React.FC = () => {
 
         <div className="lg:col-span-2">
           <Card className="p-6 rounded-md shadow-notion bg-white border-notion-border">
-            {currentItem && (
+            {currentItem ? (
               <div className="text-center mb-4 animate-fade-in-slow">
                 <h2 className="text-sm font-normal text-notion-subtle uppercase tracking-wide mb-2">
-                  Current Topic
+                  当前主题
                 </h2>
                 <h3 className="text-2xl font-medium text-notion-text mb-1">
                   {currentItem.title}
                 </h3>
                 <p className="text-notion-subtle">
-                  Led by {currentItem.owner.name}
+                  主持人: {currentItem.owner.name}
+                </p>
+              </div>
+            ) : (
+              <div className="text-center mb-4 animate-fade-in-slow">
+                <h3 className="text-xl font-medium text-notion-text mb-1">
+                  等待开始
+                </h3>
+                <p className="text-notion-subtle">
+                  请通过提示词生成议程或选择一个议程项目
                 </p>
               </div>
             )}
@@ -118,6 +143,7 @@ const AgendaTimer: React.FC = () => {
               onSkip={timer.actions.skipToNext}
               onAddTime={timer.actions.addTime}
               onToggleFullscreen={toggleFullscreen}
+              disabled={!currentItem}
             />
           </Card>
         </div>
